@@ -1,4 +1,4 @@
-# 🧠 CiviLens  
+# 🧠 CiviLens Backend
 ### Graph-based Retrieval-Augmented Generation for Syrian Societal Events
 
 > **Inspired by:** [*XGraphRAG: Interactive Visual Analysis for Graph-based Retrieval-Augmented Generation* (Ke Wang et al., 2024)](https://arxiv.org/abs/2406.06645)
@@ -67,23 +67,22 @@ Event & Entity Graph (actors, regions)   Generated Answer + Evidence
 
 ---
 
-## 📁 Repository Structure
+## 📁 Project Structure
 
 ```
 
 CiviLens/
 │
-├── backend/
-│   ├── api/              # FastAPI endpoints
-│   ├── core/             # RAG logic (retriever, generator, embeddings)
-│   ├── data_ingestion/   # ETL scripts for event data
-│   ├── db/               # DB and graph schema definitions
-│   ├── config/           # Environment and logging
-│   └── main.py           # Entry point
 │
-├── vector_store/
-│   ├── init_vector_db.py
-│   └── embed_documents.py
+├── civilens-backend/
+│   ├── apps/
+│   │   ├── api/           # Django REST API (views, serializers)
+│   │   ├── db/            # ORM models and data access
+│   │   ├── graph/         # Graph schema and construction
+│   │   ├── embeddings/    # Embedding generation
+│   │   ├── rag/           # Retrieval + Generation pipeline
+│   │   └── pipelines/     # Background ingestion and graph updates
+│   └── civilens/          # Django project settings
 │
 ├── notebooks/           
 │
