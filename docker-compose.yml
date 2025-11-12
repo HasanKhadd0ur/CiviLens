@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: civilens_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-civilens}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: ./CiviLens.Backend
+      dockerfile: Dockerfile
+    container_name: civilens_backend
+    command: sh /entrypoint.sh
+    volumes:
+      - ./CiviLens.Backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./CiviLens.Backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
